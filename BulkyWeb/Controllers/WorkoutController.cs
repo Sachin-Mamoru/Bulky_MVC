@@ -1,20 +1,20 @@
-﻿using BulkyWeb.Data;
-using BulkyWeb.Models;
+﻿using CW2.Data;
+using CW2.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BulkyWeb.Controllers
+namespace CW2.Controllers
 {
-    public class CategoryController : Controller
+    public class WorkoutController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        public WorkoutController(ApplicationDbContext db)
         {
             _db= db;
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _db.Categories.ToList();
-            return View(objCategoryList);
+            List<Workout> objWorkputList = _db.Workouts.ToList();
+            return View(objWorkputList);
         }
 
         public IActionResult Create()
@@ -22,18 +22,18 @@ namespace BulkyWeb.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Category obj)
+        public IActionResult Create(Workout obj)
         {
-            if (obj.Name == obj.DisplayOrder.ToString())
+            if (obj.WorkoutDuration > 50)
             {
-                ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");
+                ModelState.AddModelError("WorkoutDuration", "The Workou tDuration cannot be more than 50 minutes.");
             }
 
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
+                _db.Workouts.Add(obj);
                 _db.SaveChanges();
-                TempData["success"] = "Category created successfully";
+                TempData["success"] = "Workout created successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -46,24 +46,24 @@ namespace BulkyWeb.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _db.Categories.Find(id);
+            Workout? workoutFromDb = _db.Workouts.Find(id);
             //Category? categoryFromDb1 = _db.Categories.FirstOrDefault(u=>u.Id==id);
             //Category? categoryFromDb2 = _db.Categories.Where(u=>u.Id==id).FirstOrDefault();
 
-            if (categoryFromDb == null)
+            if (workoutFromDb == null)
             {
                 return NotFound();
             }
-            return View(categoryFromDb);
+            return View(workoutFromDb);
         }
         [HttpPost]
-        public IActionResult Edit(Category obj)
+        public IActionResult Edit(Workout obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
+                _db.Workouts.Update(obj);
                 _db.SaveChanges();
-                TempData["success"] = "Category updated successfully";
+                TempData["success"] = "Workout updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -76,7 +76,7 @@ namespace BulkyWeb.Controllers
             {
                 return NotFound();
             }
-            Category? categoryFromDb = _db.Categories.Find(id);
+            Workout? categoryFromDb = _db.Workouts.Find(id);
           
             if (categoryFromDb == null)
             {
@@ -87,14 +87,14 @@ namespace BulkyWeb.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-            Category? obj = _db.Categories.Find(id);
+            Workout? obj = _db.Workouts.Find(id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Categories.Remove(obj);
+            _db.Workouts.Remove(obj);
             _db.SaveChanges();
-            TempData["success"] = "Category deleted successfully";
+            TempData["success"] = "Workout deleted successfully";
             return RedirectToAction("Index");
         }
     }

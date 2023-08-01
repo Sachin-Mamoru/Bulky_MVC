@@ -1,0 +1,81 @@
+﻿@model List<Workout>
+
+<div class="container">
+        <div class="row pt-4 pb-3">
+            <div class="col-6">
+                <h2 class="text-primary">
+                Workout List
+                </h2>
+            </div>
+        </div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>
+            Workout Type
+        </th>
+        <th>
+            Workout Duration
+        </th>
+        <th>
+            Cheat Meal
+        </th>
+        <th>
+            Workout Date
+        </th>
+        <th>
+            Weight Value
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+            @foreach (var obj in Model.OrderBy(u => u.WorkoutDate))
+        {
+            <tr>
+                    <td>@obj.WorkoutType</td>
+                <td>
+                        @obj.WorkoutDuration
+                </td>
+                <td>
+                    @obj.CheatMeal
+                </td>
+                <td>
+                        @obj.WorkoutDate
+                </td>
+                <td>
+                        @obj.WeightValue
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
